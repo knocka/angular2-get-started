@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var people_service_1 = require('./people.service');
 var AppComponent = (function () {
     function AppComponent() {
         this.title = 'People List';
@@ -16,7 +17,10 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n    <h1>  {{title}}  </h1>\n    <people-list>\n    "
+            template: "\n    <h1>  {{title}}  </h1>\n    <people-list>\n    ",
+            // HERE! This registers the PeopleService 
+            // now Angular 2 knows to inject it when required
+            providers: [people_service_1.PeopleService]
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

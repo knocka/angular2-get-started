@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Person } from './person';
+import { PeopleService } from './people.service';
+
 
 @Component({
   selector: 'people-list',
@@ -7,16 +9,27 @@ import { Person } from './person';
   <!-- this is the new syntax for ng-repeat -->
   <ul>
     <li *ngFor="let person of people">
+    <a href="#" (click)="selectPerson(person)">
      {{person.name}} - wright({{person.weight}}) height({{person.height}})
+     </a>
     </li>
   </ul>
+  <person-details [person]="selectedPerson"></person-details>
   `
 })
-export class PeopleListComponent{
-  people: Person[] = [
-    {name: 'Luke Skywalker', height: 177, weight: 70},
-    {name: 'Darth Vader', height: 200, weight: 100},
-    {name: 'Han Solo', height: 185, weight: 85},
-  ];
-
+export class PeopleListComponent {
+  people: Person[] = [];
+  selectedPerson: Person;
+  
+  constructor(private _peopleService : PeopleService){
+    console.log("DEBUG> PeopleService constructor");
+   }
+  ngOnInit() {
+    console.log("DEBUG> ngOnInit()");
+    this.people = this._peopleService.getAll();
+  }
+  selectPerson(person: Person) {
+    console.log("DEBUG> selectPerson()");
+    this.selectedPerson = person;
+  }
 }

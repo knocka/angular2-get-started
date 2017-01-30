@@ -9,20 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var people_service_1 = require('./people.service');
 var PeopleListComponent = (function () {
-    function PeopleListComponent() {
-        this.people = [
-            { name: 'Luke Skywalker', height: 177, weight: 70 },
-            { name: 'Darth Vader', height: 200, weight: 100 },
-            { name: 'Han Solo', height: 185, weight: 85 },
-        ];
+    function PeopleListComponent(_peopleService) {
+        this._peopleService = _peopleService;
+        this.people = [];
+        console.log("DEBUG> PeopleService constructor");
     }
+    PeopleListComponent.prototype.ngOnInit = function () {
+        console.log("DEBUG> ngOnInit()");
+        this.people = this._peopleService.getAll();
+    };
+    PeopleListComponent.prototype.selectPerson = function (person) {
+        console.log("DEBUG> selectPerson()");
+        this.selectedPerson = person;
+    };
     PeopleListComponent = __decorate([
         core_1.Component({
             selector: 'people-list',
-            template: "\n  <!-- this is the new syntax for ng-repeat -->\n  <ul>\n    <li *ngFor=\"let person of people\">\n     {{person.name}} - wright({{person.weight}}) height({{person.height}})\n    </li>\n  </ul>\n  "
+            template: "\n  <!-- this is the new syntax for ng-repeat -->\n  <ul>\n    <li *ngFor=\"let person of people\">\n    <a href=\"#\" (click)=\"selectPerson(person)\">\n     {{person.name}} - wright({{person.weight}}) height({{person.height}})\n     </a>\n    </li>\n  </ul>\n  <person-details [person]=\"selectedPerson\"></person-details>\n  "
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [people_service_1.PeopleService])
     ], PeopleListComponent);
     return PeopleListComponent;
 }());

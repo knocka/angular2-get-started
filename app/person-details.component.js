@@ -9,24 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-//import { SomeOtherService } from './some-other.service';
-var PeopleService = (function () {
-    function PeopleService() {
+var PersonDetailsComponent = (function () {
+    function PersonDetailsComponent() {
     }
-    //constructor(private _someOtherService: SomeOtherService){}
-    PeopleService.prototype.getAll = function () {
-        console.log("DEBUG> getAll()");
-        return [
-            { name: 'Luke Skywalker', height: 177, weight: 70 },
-            { name: 'Darth Vader', height: 200, weight: 100 },
-            { name: 'Han Solo', height: 185, weight: 85 },
-        ];
-    };
-    PeopleService = __decorate([
-        core_1.Injectable(), 
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], PersonDetailsComponent.prototype, "person", void 0);
+    PersonDetailsComponent = __decorate([
+        core_1.Component({
+            selector: 'person-details',
+            template: "\n  <section *ngIf=\"person\">\n    <h2>You selected:  {{person.name}}</h2>\n    <h3>Description</h3>\n    <p>\n       {{person.name}} weights  {{person.weight}} and is  {{person.height}} tall.\n    </p>\n  </section>\n  "
+        }), 
         __metadata('design:paramtypes', [])
-    ], PeopleService);
-    return PeopleService;
+    ], PersonDetailsComponent);
+    return PersonDetailsComponent;
 }());
-exports.PeopleService = PeopleService;
-//# sourceMappingURL=people.service.js.map
+exports.PersonDetailsComponent = PersonDetailsComponent;
+//# sourceMappingURL=person-details.component.js.map
