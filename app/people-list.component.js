@@ -27,7 +27,7 @@ var PeopleListComponent = (function () {
     PeopleListComponent = __decorate([
         core_1.Component({
             selector: 'people-list',
-            template: "\n  <!-- this is the new syntax for ng-repeat -->\n  <ul>\n    <li *ngFor=\"let person of people\">\n    <a href=\"#\" (click)=\"selectPerson(person)\">\n     {{person.name}} - wright({{person.weight}}) height({{person.height}})\n     </a>\n    </li>\n  </ul>\n  <person-details [person]=\"selectedPerson\"></person-details>\n  "
+            template: "\n  <!-- this is the new syntax for ng-repeat -->\n  <ul>\n    <li *ngFor=\"let person of people\">\n    <a href=\"#\" [routerLink]=\"['/persons', person.id]\">\n     {{person.name}} - wright({{person.weight}}) height({{person.height}})\n     </a>\n    </li>\n  </ul>\n  <b>\n   <ul>\n    <li *ngFor=\"let person1 of people\" (click)=\"selectPerson(person1)\">\n     {{person1.name}} - wright({{person1.weight}}) height({{person1.height}})\n    </li>\n  </ul>\n  <personx-details [personx]=\"selectedPerson\"></personx-details>\n  "
         }), 
         __metadata('design:paramtypes', [people_service_1.PeopleService])
     ], PeopleListComponent);

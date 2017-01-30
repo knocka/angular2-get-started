@@ -9,19 +9,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
+var people_service_1 = require('./people.service');
 var PersonDetailsComponent = (function () {
-    function PersonDetailsComponent() {
+    function PersonDetailsComponent(peopleService, route) {
+        this.peopleService = peopleService;
+        this.route = route;
+        console.log("DEBUG>PersonDetailsComponent.constructor");
     }
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Object)
-    ], PersonDetailsComponent.prototype, "person", void 0);
+    PersonDetailsComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        console.log("DEBUG>PersonDetailsComponent.ngOnInit()");
+        this.sub = this.route.params.subscribe(function (params) {
+            var id = Number.parseInt(params['id']);
+            _this.person = _this.peopleService.get(id);
+        });
+    };
+    PersonDetailsComponent.prototype.ngOnDestroy = function () {
+        this.sub.unsubscribe();
+    };
     PersonDetailsComponent = __decorate([
         core_1.Component({
             selector: 'person-details',
-            template: "\n  <section *ngIf=\"person\">\n    <h2>You selected:  {{person.name}}</h2>\n    <h3>Description</h3>\n    <p>\n       {{person.name}} weights  {{person.weight}} and is  {{person.height}} tall.\n    </p>\n  </section>\n  "
+            template: "\n  <!-- new syntax for ng-if -->\n  <section *ngIf=\"person\">\n    <h2>You selected:  {{person.name}}  </h2>\n    <h3>Description</h3>\n    <p>\n       {{person.name}}  weights  {{person.weight}} and is  {{person.height}} tall.\n    </p>\n  </section>\n  "
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [people_service_1.PeopleService, router_1.ActivatedRoute])
     ], PersonDetailsComponent);
     return PersonDetailsComponent;
 }());

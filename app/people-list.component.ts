@@ -9,12 +9,18 @@ import { PeopleService } from './people.service';
   <!-- this is the new syntax for ng-repeat -->
   <ul>
     <li *ngFor="let person of people">
-    <a href="#" (click)="selectPerson(person)">
+    <a href="#" [routerLink]="['/persons', person.id]">
      {{person.name}} - wright({{person.weight}}) height({{person.height}})
      </a>
     </li>
   </ul>
-  <person-details [person]="selectedPerson"></person-details>
+  <b>
+   <ul>
+    <li *ngFor="let person1 of people" (click)="selectPerson(person1)">
+     {{person1.name}} - wright({{person1.weight}}) height({{person1.height}})
+    </li>
+  </ul>
+  <personx-details [personx]="selectedPerson"></personx-details>
   `
 })
 export class PeopleListComponent {

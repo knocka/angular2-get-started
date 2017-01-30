@@ -9,22 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var people_service_1 = require('./people.service');
-var AppComponent = (function () {
-    function AppComponent() {
-        this.title = 'People List';
+var PersonxDetailsComponent = (function () {
+    function PersonxDetailsComponent() {
     }
-    AppComponent = __decorate([
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], PersonxDetailsComponent.prototype, "personx", void 0);
+    PersonxDetailsComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            template: "\n    <h1>  {{title}}  </h1>\n    <router-outlet></router-outlet>\n    ",
-            // HERE! This registers the PeopleService 
-            // now Angular 2 knows to inject it when required
-            providers: [people_service_1.PeopleService]
+            selector: 'personx-details',
+            template: "\n  <!-- new syntax for ng-if -->\n  <section *ngIf=\"personx\">\n    <h2>You selected:  {{personx.name}}  </h2>\n    <h3>Description</h3>\n    <p>\n       {{personx.name}}  weights  {{personx.weight}} and is  {{personx.height}} tall.\n    </p>\n  </section>\n  "
         }), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], PersonxDetailsComponent);
+    return PersonxDetailsComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.PersonxDetailsComponent = PersonxDetailsComponent;
+//# sourceMappingURL=personx-details.component.js.map

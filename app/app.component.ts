@@ -6,7 +6,7 @@ import { PeopleService } from './people.service';
     selector: 'my-app',
     template: `
     <h1>  {{title}}  </h1>
-    <people-list>
+    <router-outlet></router-outlet>
     `,
   // HERE! This registers the PeopleService 
   // now Angular 2 knows to inject it when required
