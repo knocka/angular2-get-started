@@ -17,8 +17,10 @@ var PeopleListComponent = (function () {
         console.log("DEBUG> PeopleService constructor");
     }
     PeopleListComponent.prototype.ngOnInit = function () {
+        var _this = this;
         console.log("DEBUG> ngOnInit()");
-        this.people = this._peopleService.getAll();
+        //this.people = this._peopleService.getAll();
+        this._peopleService.getAll().subscribe(function (p) { return _this.people = p; });
     };
     PeopleListComponent.prototype.selectPerson = function (person) {
         console.log("DEBUG> selectPerson()");

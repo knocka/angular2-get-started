@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Person } from './person';
 import { PeopleService } from './people.service';
 
@@ -23,16 +23,18 @@ import { PeopleService } from './people.service';
   <personx-details [personx]="selectedPerson"></personx-details>
   `
 })
-export class PeopleListComponent {
+export class PeopleListComponent implements OnInit{
   people: Person[] = [];
   selectedPerson: Person;
   
   constructor(private _peopleService : PeopleService){
     console.log("DEBUG> PeopleService constructor");
    }
+
   ngOnInit() {
     console.log("DEBUG> ngOnInit()");
-    this.people = this._peopleService.getAll();
+    //this.people = this._peopleService.getAll();
+    this._peopleService.getAll().subscribe(p => this.people = p)
   }
   selectPerson(person: Person) {
     console.log("DEBUG> selectPerson()");

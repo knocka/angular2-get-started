@@ -10,38 +10,107 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 //import { SomeOtherService } from './some-other.service';
-var PEOPLE = [
-    { id: 1, name: 'Luke Skywalker', height: 177, weight: 70 },
-    { id: 2, name: 'Darth Vader', height: 200, weight: 100 },
-    { id: 3, name: 'Han Solo', height: 185, weight: 85 },
+var http_1 = require('@angular/http');
+var Rx_1 = require('rxjs/Rx');
+/*
+const PEOPLE: Person[] = [
+  { id: 1, name: 'Luke Skywalker', height: 177, weight: 70 },
+  { id: 2, name: 'Darth Vader', height: 200, weight: 100 },
+  { id: 3, name: 'Han Solo', height: 185, weight: 85 },
 ];
+*/
 var PeopleService = (function () {
-    function PeopleService() {
-    }
     //constructor(private _someOtherService: SomeOtherService){}
+    function PeopleService(http) {
+        this.http = http;
+        this.baseUrl = 'http://swapi.co/api';
+    }
     PeopleService.prototype.getAll = function () {
-        console.log("DEBUG> getAll()");
-        return PEOPLE;
+        var people$ = this.http
+            .get(this.baseUrl + "/people", { headers: this.getHeaders() })
+            .map(mapPersons);
+        return people$;
     };
     PeopleService.prototype.get = function (id) {
-        return PEOPLE.find(function (p) { return p.id === id; });
+        var person$ = this.http
+            .get(this.baseUrl + "/people/" + id, { headers: this.getHeaders() })
+            .map(mapPerson);
+        return person$;
     };
     PeopleService.prototype.save = function (person) {
-        var originalPerson = PEOPLE.find(function (p) { return p.id === person.id; });
-        if (originalPerson)
-            Object.assign(originalPerson, person);
-        // saved muahahaha
+        // this won't actually work because the StarWars API doesn't
+        // is read-only. But it would look like this:
+        return this.http
+            .put(this.baseUrl + "/people/" + person.id, JSON.stringify(person), { headers: this.getHeaders() });
     };
-    PeopleService.prototype.clone = function (object) {
-        // hack
-        console.log("DEBUG> clone()");
-        return JSON.parse(JSON.stringify(object));
+    PeopleService.prototype.getHeaders = function () {
+        var headers = new http_1.Headers();
+        headers.append('Accept', 'application/json');
+        return headers;
     };
     PeopleService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [http_1.Http])
     ], PeopleService);
     return PeopleService;
 }());
 exports.PeopleService = PeopleService;
+function mapPersons(response) {
+    // The response of the API has a results
+    // property with the actual results
+    return response.json().results.map(toPerson);
+}
+function toPerson(r) {
+    var person = ({
+        id: extractId(r),
+        url: r.url,
+        name: r.name,
+        weight: r.mass,
+        height: r.height,
+    });
+    console.log('Parsed person:', person);
+    return person;
+}
+// to avoid breaking the rest of our app
+// I extract the id from the person url
+function extractId(personData) {
+    var extractedId = personData.url.replace('http://swapi.co/api/people/', '').replace('/', '');
+    return parseInt(extractedId);
+}
+function mapPerson(response) {
+    // toPerson looks just like in the previous example
+    return toPerson(response.json());
+}
+// this could also be a private method of the component class
+function handleError(error) {
+    // log error
+    // could be something more sofisticated
+    var errorMsg = error.message || "Yikes! There was was a problem with our hyperdrive device and we couldn't retrieve your data!";
+    console.error(errorMsg);
+    // throw an application level error
+    return Rx_1.Observable.throw(errorMsg);
+}
+/*
+getAllX() : Person[]{
+  console.log("DEBUG> getAll()");
+  return PEOPLE.map(p => this.clone(p));
+  //return PEOPLE;
+}
+
+getX(id: number) : Person {
+  //return PEOPLE.find(p => p.id === id);
+  return this.clone(PEOPLE.find(p => p.id === id));
+}
+saveX(person: Person){
+  let originalPerson = PEOPLE.find(p => p.id === person.id);
+  if (originalPerson) Object.assign(originalPerson, person);
+  // saved muahahaha
+}
+
+  private clone(object: any){
+  // hack
+  console.log("DEBUG> clone()");
+  return JSON.parse(JSON.stringify(object));
+}
+*/
 //# sourceMappingURL=people.service.js.map
