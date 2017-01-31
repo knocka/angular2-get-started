@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
+var forms_1 = require('@angular/forms');
 var app_routes_1 = require('./app.routes');
 var app_component_1 = require('./app.component');
 var people_list_component_1 = require('./people-list.component');
@@ -20,7 +21,7 @@ var AppModule = (function () {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, app_routes_1.routing],
+            imports: [platform_browser_1.BrowserModule, app_routes_1.routing, forms_1.FormsModule],
             declarations: [app_component_1.AppComponent, people_list_component_1.PeopleListComponent, person_details_component_1.PersonDetailsComponent, personx_details_component_1.PersonxDetailsComponent],
             bootstrap: [app_component_1.AppComponent]
         }), 

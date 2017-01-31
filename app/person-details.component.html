@@ -11,7 +11,10 @@
     <form>
       <div>
         <label for="name">Name: </label>
-            <input type="text" name="name" [value]="person.name" (change)="person.name = name.value" #name>
+          <input type="text" name="name" required [(ngModel)]="person.name" #name="ngModel">
+          <div [hidden]="name.valid || name.pristine" class="error">
+             Name is required my good sir/lady!
+          </div>
       </div>
       <div>
         <label for="weight">Weight: </label>
@@ -19,7 +22,7 @@
       </div>
       <div>
         <label for="height">Height: </label>
-        <input type="number" name="height">
+        <input type="number" name="height" [value]="person.height" (change)="person.height = height.value" #height>
       </div>
     </form>
   </section>
