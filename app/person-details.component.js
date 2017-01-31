@@ -24,18 +24,29 @@ var PersonDetailsComponent = (function () {
         console.log("DEBUG>PersonDetailsComponent.ngOnInit()");
         this.sub = this.route.params.subscribe(function (params) {
             var id = Number.parseInt(params['id']);
-            _this.person = _this.peopleService.get(id);
+            console.log('getting person with id: ', id);
+            //this.person = this.peopleService.get(id);
+            _this.peopleService
+                .get(id)
+                .subscribe(function (p) { return _this.person = p; });
         });
     };
     PersonDetailsComponent.prototype.ngOnDestroy = function () {
         this.sub.unsubscribe();
     };
     PersonDetailsComponent.prototype.savePersonDetails = function () {
+        this.peopleService
+            .save(this.person)
+            .subscribe(function (r) { console.log('success'); });
+    };
+    PersonDetailsComponent.prototype.savePersonDetailsX = function () {
         alert("saved!!! " + JSON.stringify(this.person));
         this.peopleService.save(this.person);
     };
     PersonDetailsComponent.prototype.gotoPeoplesList = function () {
-        this.router.navigateByUrl('/persons');
+        //this.router.navigateByUrl('/persons');
+        var link = ['/persons'];
+        this.router.navigate(link);
     };
     PersonDetailsComponent = __decorate([
         core_1.Component({

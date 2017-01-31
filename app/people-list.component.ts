@@ -23,6 +23,7 @@ import { PeopleService } from './people.service';
   <personx-details [personx]="selectedPerson"></personx-details>
   `
 })
+
 export class PeopleListComponent implements OnInit{
   people: Person[] = [];
   selectedPerson: Person;
@@ -36,6 +37,7 @@ export class PeopleListComponent implements OnInit{
     //this.people = this._peopleService.getAll();
     this._peopleService.getAll().subscribe(p => this.people = p)
   }
+  
   selectPerson(person: Person) {
     console.log("DEBUG> selectPerson()");
     this.selectedPerson = person;
