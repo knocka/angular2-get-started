@@ -31,7 +31,7 @@ var PersonDetailsComponent = (function () {
     PersonDetailsComponent = __decorate([
         core_1.Component({
             selector: 'person-details',
-            template: "\n  <!-- new syntax for ng-if -->\n  <section *ngIf=\"person\">\n    <h2>You selected:  {{person.name}}  </h2>\n    <h3>Description</h3>\n    <p>\n       {{person.name}}  weights  {{person.weight}} and is  {{person.height}} tall.\n    </p>\n  </section>\n  "
+            templateUrl: 'app/person-details.component.html',
         }), 
         __metadata('design:paramtypes', [people_service_1.PeopleService, router_1.ActivatedRoute])
     ], PersonDetailsComponent);
