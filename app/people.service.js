@@ -26,6 +26,17 @@ var PeopleService = (function () {
     PeopleService.prototype.get = function (id) {
         return PEOPLE.find(function (p) { return p.id === id; });
     };
+    PeopleService.prototype.save = function (person) {
+        var originalPerson = PEOPLE.find(function (p) { return p.id === person.id; });
+        if (originalPerson)
+            Object.assign(originalPerson, person);
+        // saved muahahaha
+    };
+    PeopleService.prototype.clone = function (object) {
+        // hack
+        console.log("DEBUG> clone()");
+        return JSON.parse(JSON.stringify(object));
+    };
     PeopleService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])

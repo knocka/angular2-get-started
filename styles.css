@@ -136,6 +136,25 @@ nav a.router-link-active {
   border-radius: 4px 0 0 4px;
 }
 
+/* These styles are HEAVILY, HEAVILY inspired (STOLEN!!) */
+/* from the Angular 2 docs */
+
+/* valid and required show green */
+.ng-valid[required] {
+  border-left: 5px solid #42A948; /* green */
+}
+
+/* invalid */
+.ng-invalid {
+  border-left: 5px solid #a94442; /* red */
+}
+
+.error{
+  padding: 12px;
+  background-color: rgba(255, 0, 0, 0.2);
+  color: red;
+}
+
 /* everywhere else */
 * { 
   font-family: Arial, Helvetica, sans-serif; 
