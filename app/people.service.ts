@@ -29,7 +29,8 @@ export class PeopleService {
   get(id: number): Observable<Person> {
     let person$ = this.http
       .get(`${this.baseUrl}/people/${id}`, { headers: this.getHeaders() })
-      .map(mapPerson);
+      .map(mapPerson)
+      .catch(handleError);
     return person$;
   }
   save(person: Person): Observable<Response> {
@@ -49,9 +50,10 @@ export class PeopleService {
 }
 
   function mapPersons(response: Response): Person[] {
+       //throw new Error('ups! Force choke!');
     // The response of the API has a results
     // property with the actual results
-    return response.json().results.map(toPerson)
+    return response.json().results.map(toPerson);
   }
 
 function toPerson(r: any): Person {

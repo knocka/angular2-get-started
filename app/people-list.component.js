@@ -14,13 +14,15 @@ var PeopleListComponent = (function () {
     function PeopleListComponent(_peopleService) {
         this._peopleService = _peopleService;
         this.people = [];
+        this.errorMessage = '';
+        this.isLoading = true;
         console.log("DEBUG> PeopleService constructor");
     }
     PeopleListComponent.prototype.ngOnInit = function () {
         var _this = this;
         console.log("DEBUG> ngOnInit()");
         //this.people = this._peopleService.getAll();
-        this._peopleService.getAll().subscribe(function (p) { return _this.people = p; });
+        this._peopleService.getAll().subscribe(function (p) { return _this.people = p; }, function (e) { return _this.errorMessage = e; }, function () { return _this.isLoading = false; });
     };
     PeopleListComponent.prototype.selectPerson = function (person) {
         console.log("DEBUG> selectPerson()");
@@ -29,7 +31,7 @@ var PeopleListComponent = (function () {
     PeopleListComponent = __decorate([
         core_1.Component({
             selector: 'people-list',
-            template: "\n  <!-- this is the new syntax for ng-repeat -->\n  <ul>\n    <li *ngFor=\"let person of people\">\n    <a href=\"#\" [routerLink]=\"['/persons', person.id]\">\n     {{person.name}} - wright({{person.weight}}) height({{person.height}})\n     </a>\n    </li>\n  </ul>\n  <b>\n   <ul>\n    <li *ngFor=\"let person1 of people\" (click)=\"selectPerson(person1)\">\n     {{person1.name}} - wright({{person1.weight}}) height({{person1.height}})\n    </li>\n  </ul>\n  <personx-details [personx]=\"selectedPerson\"></personx-details>\n  "
+            template: "\n  <!-- this is the new syntax for ng-repeat -->\n  <section>\n  <ul>\n    <li *ngFor=\"let person of people\">\n    <a href=\"#\" [routerLink]=\"['/persons', person.id]\">\n     {{person.name}} - wright({{person.weight}}) height({{person.height}})\n     </a>\n    </li>\n  </ul>\n  <section *ngIf=\"errorMessage\">\n    {{errorMessage}}\n  </section>\n  </section>\n  <b>\n   <ul>\n    <li *ngFor=\"let person1 of people\" (click)=\"selectPerson(person1)\">\n     {{person1.name}} - wright({{person1.weight}}) height({{person1.height}})\n    </li>\n  </ul>\n  <personx-details [personx]=\"selectedPerson\"></personx-details>\n  "
         }), 
         __metadata('design:paramtypes', [people_service_1.PeopleService])
     ], PeopleListComponent);

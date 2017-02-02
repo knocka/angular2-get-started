@@ -34,7 +34,8 @@ var PeopleService = (function () {
     PeopleService.prototype.get = function (id) {
         var person$ = this.http
             .get(this.baseUrl + "/people/" + id, { headers: this.getHeaders() })
-            .map(mapPerson);
+            .map(mapPerson)
+            .catch(handleError);
         return person$;
     };
     PeopleService.prototype.save = function (person) {
@@ -56,6 +57,7 @@ var PeopleService = (function () {
 }());
 exports.PeopleService = PeopleService;
 function mapPersons(response) {
+    //throw new Error('ups! Force choke!');
     // The response of the API has a results
     // property with the actual results
     return response.json().results.map(toPerson);

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Person } from './person';
 import { PeopleService } from './people.service';
+import { Observable } from 'rxjs/Rx';
 
 
 @Component({
   selector: 'people-list',
   template: `
   <!-- this is the new syntax for ng-repeat -->
+  <section>
   <ul>
     <li *ngFor="let person of people">
     <a href="#" [routerLink]="['/persons', person.id]">
@@ -14,6 +16,10 @@ import { PeopleService } from './people.service';
      </a>
     </li>
   </ul>
+  <section *ngIf="errorMessage">
+    {{errorMessage}}
+  </section>
+  </section>
   <b>
    <ul>
     <li *ngFor="let person1 of people" (click)="selectPerson(person1)">
@@ -26,6 +32,8 @@ import { PeopleService } from './people.service';
 
 export class PeopleListComponent implements OnInit{
   people: Person[] = [];
+  errorMessage: string = '';
+  isLoading: boolean = true;
   selectedPerson: Person;
   
   constructor(private _peopleService : PeopleService){
@@ -35,7 +43,10 @@ export class PeopleListComponent implements OnInit{
   ngOnInit() {
     console.log("DEBUG> ngOnInit()");
     //this.people = this._peopleService.getAll();
-    this._peopleService.getAll().subscribe(p => this.people = p)
+    this._peopleService.getAll().subscribe(
+      p => this.people = p,
+      e => this.errorMessage = e,
+      () => this.isLoading = false);
   }
   
   selectPerson(person: Person) {
