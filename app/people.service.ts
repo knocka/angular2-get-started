@@ -19,6 +19,7 @@ export class PeopleService {
   //constructor(private _someOtherService: SomeOtherService){}
   constructor(private http: Http) { }
 
+  //getAll(): Promise<Person[]> {
   getAll(): Observable<Person[]> {
     let people$ = this.http
       .get(`${this.baseUrl}/people`, { headers: this.getHeaders() })
@@ -88,6 +89,7 @@ function handleError(error: any) {
   console.error(errorMsg);
 
   // throw an application level error
+  //return Promise.reject(errorMsg);
   return Observable.throw(errorMsg);
 }
 /*
